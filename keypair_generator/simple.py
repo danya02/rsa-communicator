@@ -90,4 +90,4 @@ if __name__ == '__main__':
     print("Generating keypair...", end=" ")
     pub, pri = generate_keypair(p, q)
     print("done.")
-    print("Your public key is ", pub, "and your private key is ", pri)
+    print("Your public key is ", pub, "and your private key is ", pri[1])
