@@ -76,6 +76,7 @@ if __name__ == '__main__':
     print("--- RSA keypair generator ---")
     if input("Do you want to enter primes yourself? (y/N) ").capitalize() == "Y":
         p, q = input("two primes, separated by a space: ").split(" ")
+        p, q = (int(p), int(q))
     else:
         import random
         import pyprimes
