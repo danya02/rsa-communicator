@@ -20,15 +20,15 @@ if __name__ == '__main__':
     while not correct:
         obj["name"] = input("Name: ")
         keypath = input("Path to key file: ")
-        import os
-        os.makedirs(os.path.expanduser("~/.rsa-communicator/keys"))
-        key = open(os.path.abspath(os.path.expanduser(keypath)), "b").read()
-        import uuid
-        keysave = open(os.path.expanduser(
-            "~/.rsa-communicator/keys/"+uuid.uuid4()), "wb")
-        keysave.write(key)
-        keysave.close()
-        obj["path"] = keysave.name
         if input("Is this information correct? (y/N) ").capitalize() == "Y":
             correct = True
+            import os
+            os.makedirs(os.path.expanduser("~/.rsa-communicator/keys"))
+            key = open(os.path.abspath(os.path.expanduser(keypath)), "b").read()
+            import uuid
+            keysave = open(os.path.expanduser(
+                "~/.rsa-communicator/keys/"+uuid.uuid4()), "wb")
+            keysave.write(key)
+            keysave.close()
+            obj["path"] = keysave.name
     add_object(obj)
