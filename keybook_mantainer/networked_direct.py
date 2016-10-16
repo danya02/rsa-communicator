@@ -12,7 +12,7 @@ def add_object(diction):
         obj = []
     obj += [diction]
     json.dump(obj, open(
-        os.path.expanduser("~/.rsa-communicator/keybook.json")))
+        os.path.expanduser("~/.rsa-communicator/keybook.json"), "w"))
 
 
 def load_key():
@@ -88,11 +88,14 @@ if __name__ == '__main__':
          "Should it be added to the keybook? (y/N) ").upper() == "Y":
             print("Saving key...", end=" ")
             obj = {"name": jsonobj["name"]}
-            os.makedirs(os.path.expanduser("~/.rsa-communicator/keys"))
+            try:
+                os.makedirs(os.path.expanduser("~/.rsa-communicator/keys"))
+            except:
+                pass
             key = jsonobj["key"]
             import uuid
             keysave = open(os.path.expanduser(
-                "~/.rsa-communicator/keys/"+uuid.uuid4()), "wb")
+                "~/.rsa-communicator/keys/"+"key"+str(uuid.uuid4())), "w")
             keysave.write(key)
             keysave.close()
             obj["path"] = keysave.name
