@@ -26,10 +26,10 @@ def load_key():
     return (pub, name)
 if __name__ == '__main__':
     print("--- RSA key sharer ---")
-    role = input("Should I (R)eceive or (S)end key data? ").capitalize()
+    role = input("Should I (R)eceive or (S)end key data? ").upper()
     while not role == "R" and not role == "S":
         print("Please enter R or S.")
-        role = input("Should I (R)eceive or (S)end key data? ").capitalize()
+        role = input("Should I (R)eceive or (S)end key data? ").upper()
     if role == "S":
         s = socket.socket()
         s1 = socket.socket()
@@ -52,14 +52,14 @@ if __name__ == '__main__':
             auth = bytes()
             for i in range(4):
                 auth += c.recv(1)
-            authkey = auth.hex().capitalize()
+            authkey = auth.hex().upper()
             print("done.")
             print("Recieved connection from address", addr,
                   "with authentication key", authkey+".")
             if input(
-             "Does this mirror your observations? (y/N) ").capitalize() == "Y":
+             "Does this mirror your observations? (y/N) ").upper() == "Y":
                 print("Transmitting data...", end=" ")
-                c.sendall(message)
+                c.sendall(bytes(message, "utf-8"))
                 c.close()
                 print("done.")
     else:
@@ -73,10 +73,11 @@ if __name__ == '__main__':
         import os
         import json
         key = os.urandom(4)
-        hexkey = key.hex().capitalize()
+        hexkey = key.hex().upper()
         s.connect((host, port))
+        print("Your authorization key id:", hexkey)
         s.sendall(key)
-        s.settimeout(60)
+        s.settimeout(30)
         message = s.recv(8192)
         if message == b"":
             print("Recieved null message, try again.")
@@ -84,7 +85,7 @@ if __name__ == '__main__':
         jsonobj = json.loads(str(message)[2:-1])
         print("Received keybook entry of ", jsonobj["name"], "", sep="'")
         if input(
-         "Should it be added to the keybook? (y/N) ").capitalize() == "Y":
+         "Should it be added to the keybook? (y/N) ").upper() == "Y":
             print("Saving key...", end=" ")
             obj = {"name": jsonobj["name"]}
             os.makedirs(os.path.expanduser("~/.rsa-communicator/keys"))
