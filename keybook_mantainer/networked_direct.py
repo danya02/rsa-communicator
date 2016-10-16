@@ -27,7 +27,7 @@ def load_key():
 if __name__ == '__main__':
     print("--- RSA key sharer ---")
     role = input("Should I (R)eceive or (S)end key data? ").capitalize()
-    while not role == "R" or role == "S":
+    while not role == "R" and not role == "S":
         print("Please enter R or S.")
         role = input("Should I (R)eceive or (S)end key data? ").capitalize()
     if role == "S":
