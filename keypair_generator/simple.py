@@ -7,7 +7,7 @@ def keys(com):
     return rsa.newkeys(com, poolsize=multiprocessing.cpu_count())
 
 
-def save(pub, pri):
+def save(pub, pri, name):
     import os
     try:
         os.makedirs(os.path.expanduser("~/.rsa-communicator"))
@@ -19,12 +19,16 @@ def save(pub, pri):
     i = open(os.path.expanduser("~/.rsa-communicator/pub.key"), "wb")
     i.write(pub.save_pkcs1())
     i.close()
+    i = open(os.path.expanduser("~/.rsa-communicator/name"), "w")
+    i.write(name)
+    i.close()
 if __name__ == '__main__':
     print("--- RSA keypair generator ---")
     comp = int(input("complexity of key: "))
     print("Generating keypair...", end=" ")
     pub, pri = keys(comp)
     print("done.")
+    name = input("Your name: ")
     print("Saving keys...", end=" ")
-    save(pub, pri)
+    save(pub, pri, name)
     print("done.")
