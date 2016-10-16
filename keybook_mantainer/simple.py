@@ -24,7 +24,7 @@ if __name__ == '__main__':
             correct = True
             import os
             os.makedirs(os.path.expanduser("~/.rsa-communicator/keys"))
-            key = open(os.path.abspath(os.path.expanduser(keypath)), "b").read()
+            key = open(os.path.abspath(os.path.expanduser(keypath)), "rb").read()
             import uuid
             keysave = open(os.path.expanduser(
                 "~/.rsa-communicator/keys/"+uuid.uuid4()), "wb")

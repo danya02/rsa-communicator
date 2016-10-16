@@ -4,10 +4,10 @@ import rsa
 
 def load_keys():
     import os
-    i = open(os.path.expanduser("~/.rsa-communicator/pub.key"), "b")
+    i = open(os.path.expanduser("~/.rsa-communicator/pub.key"), "rb")
     pub = rsa.PublicKey.load_pkcs1(i.read())
     i.close()
-    i = open(os.path.expanduser("~/.rsa-communicator/priv.key"), "b")
+    i = open(os.path.expanduser("~/.rsa-communicator/priv.key"), "rb")
     pri = rsa.PrivateKey.load_pkcs1(i.read())
     i.close()
     return (pub, pri)

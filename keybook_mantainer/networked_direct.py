@@ -17,7 +17,7 @@ def add_object(diction):
 
 def load_key():
     import os
-    i = open(os.path.expanduser("~/.rsa-communicator/pub.key"), "b")
+    i = open(os.path.expanduser("~/.rsa-communicator/pub.key"), "rb")
     pub = i.read()
     i.close()
     i = open(os.path.expanduser("~/.rsa-communicator/name"))
