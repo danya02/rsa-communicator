@@ -33,7 +33,7 @@ if __name__ == '__main__':
     print("Please select the index of the addressee...")
     for i in keybook:
         print(keybook.index(i)+1, ". ", i["name"])
-    i = open(keybook[int(input("index: "))+1]["path"], "b")
+    i = open(keybook[int(input("index: "))-1]["path"], "rb")
     key = rsa.PublicKey.load_pkcs1(i.read())
     i.close()
     print("Please enter the plaintext of the message on a single line...")
