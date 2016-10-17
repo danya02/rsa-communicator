@@ -28,7 +28,7 @@ if __name__ == '__main__':
             import uuid
             keysave = open(os.path.expanduser(
                 "~/.rsa-communicator/keys/"+uuid.uuid4()), "wb")
-            keysave.write(key)
+            keysave.write(key.replace("\\n", "\n"))
             keysave.close()
             obj["path"] = keysave.name
     add_object(obj)
