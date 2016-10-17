@@ -30,11 +30,11 @@ def load_keybook():
 
 def encrypt(plaintext):
     global encrypt_key
-    return rsa.encrypt(plaintext, encrypt_key)
+    return rsa.encrypt(bytes(plaintext, "utf-8"), encrypt_key)
 
 
 def on_acquire(client, userdata, message):
-    print(">", decrypt(message.payload))
+    print(">", decrypt(bytes(message.payload, "utf-8")))
 
 if __name__ == '__main__':
     print("--- RSA chat ---")
