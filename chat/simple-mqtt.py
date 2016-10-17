@@ -35,9 +35,12 @@ def encrypt(plaintext):
 
 def on_acquire(client, userdata, message):
     try:
-        print(">", decrypt(bytes(message.payload, "utf-8")))
+        try:
+            print(">", decrypt(bytes(message.payload, "utf-8")))
+        except:
+            print(">", decrypt(message.payload))
     except:
-        print(">", decrypt(message.payload))
+        pass
 
 if __name__ == '__main__':
     print("--- RSA chat ---")
