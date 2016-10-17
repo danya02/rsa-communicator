@@ -44,9 +44,9 @@ if __name__ == '__main__':
     keys = load_keys()
     global decrypt_key
     decrypt_key = keys[1]
-    print("Please select the index of the addressee...")
     addr = input("IP address: ")
     topic = input("chat room: ")
+    print("Please select the addressee's index:")
     for i in keybook:
         print(keybook.index(i)+1, ". ", i["name"], sep="")
     i = open(keybook[int(input("index: "))-1]["path"], "rb")
