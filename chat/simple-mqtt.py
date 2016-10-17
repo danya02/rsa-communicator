@@ -38,7 +38,7 @@ def on_acquire(client, userdata, message):
 
 if __name__ == '__main__':
     print("--- RSA chat ---")
-    print("Please enter the IP address of your MQTT server and your " +
+    print("Please enter the IP address of your MQTT server and your",
           "chat room name...")
     keybook = load_keybook()
     keys = load_keys()
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     addr = input("IP address: ")
     topic = input("chat room: ")
     for i in keybook:
-        print(keybook.index(i)+1, ". ", i["name"])
+        print(keybook.index(i)+1, ". ", i["name"], sep="")
     i = open(keybook[int(input("index: "))-1]["path"], "rb")
     global encrypt_key
     encrypt_key = rsa.PublicKey.load_pkcs1(i.read())
@@ -65,5 +65,13 @@ if __name__ == '__main__':
             print(" (Message being encrypted and sent...)",
                   end="\r", flush=True)
             message = encrypt(message)
-            m.publish("topic", payload=message)
+            m.publish(topic, payload=message)
             print("\033[K", end="", flush=True)
+    except KeyboardInterrupt:
+        m.loop_stop()
+        m.disconnect()
+        print("=== DISCONNECTED ===")
+    except EOFError:
+        m.loop_stop()
+        m.disconnect()
+        print("=== DISCONNECTED ===")
