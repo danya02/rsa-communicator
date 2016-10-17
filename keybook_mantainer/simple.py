@@ -30,5 +30,8 @@ if __name__ == '__main__':
                 "~/.rsa-communicator/keys/"+uuid.uuid4()), "wb")
             keysave.write(key.replace("\\n", "\n"))
             keysave.close()
+            keyconf = open(keysave.name, "r+")
+            keyconf.write(keysave.read().replace("\\\n", "\n"))
+            keyconf.close()
             obj["path"] = keysave.name
     add_object(obj)
