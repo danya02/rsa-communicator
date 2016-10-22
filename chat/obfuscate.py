@@ -9,6 +9,7 @@ class PassThru(codecs.Codec):
 
 class ROT13(codecs.Codec):
     def encode(text):
+        text = str(text)[2:-1]
         return (codecs.encode(text, "rot13"), len(text))
     def decode(text):
         return self.encode(text)
