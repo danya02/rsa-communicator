@@ -45,7 +45,7 @@ class Base16(codecs.Codec):
         return (str(base64.b16decode(text))[2:-1], len(text))
 
 global __encoders__
-__encoders__  = [PassThru, SwapCase, ROT13, Base16, Base32, Base64]
+__encoders__  = [PassThru, SwapCase, ROT13, Base16, Base32, Base64, Base85]
 
 def obfs(text, proto):
     global __encoders__
