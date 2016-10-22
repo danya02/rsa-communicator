@@ -31,7 +31,7 @@ def load_keybook():
 
 def encrypt(plaintext):
     global encrypt_key
-    return rsa.encrypt(bytes(plaintext, "utf-8"), encrypt_key)
+    return rsa.encrypt(plaintext, encrypt_key)
 
 
 def on_acquire(client, userdata, message):
@@ -79,6 +79,10 @@ if __name__ == '__main__':
                   end="\r", flush=True)
             message = bytes(message, "utf8")
             message = obfuscate.obfs(message, proto)
+            try:
+                message = bytes(message, "utf8")
+            except:
+                pass
             message = encrypt(message)
             m.publish(topic, payload=message)
             print("\033[K", end="", flush=True)
