@@ -77,6 +77,7 @@ if __name__ == '__main__':
             message = input()
             print(" (Message being encrypted and sent...)",
                   end="\r", flush=True)
+            message = bytes(message, "utf8")
             message = obfuscate.obfs(message, proto)
             message = encrypt(message)
             m.publish(topic, payload=message)
