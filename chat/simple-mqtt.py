@@ -77,8 +77,8 @@ if __name__ == '__main__':
             message = input()
             print(" (Message being encrypted and sent...)",
                   end="\r", flush=True)
-            message = encrypt(message)
             message = obfuscate.obfs(message, proto)
+            message = encrypt(message)
             m.publish(topic, payload=message)
             print("\033[K", end="", flush=True)
     except KeyboardInterrupt:
