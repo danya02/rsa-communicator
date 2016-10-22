@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import rsa
 import paho.mqtt.client as mqtt
+import obfuscate
 
 
 def load_keys():
@@ -34,11 +35,13 @@ def encrypt(plaintext):
 
 
 def on_acquire(client, userdata, message):
+    global proto
     try:
         try:
-            print(">", decrypt(bytes(message.payload, "utf-8")))
+            print(">", obfuscate.deobfs(decrypt(
+                bytes(message.payload, "utf-8")), proto))
         except:
-            print(">", decrypt(message.payload))
+            print(">", obfuscate.deobfs(decrypt(message.payload), proto))
     except:
         pass
 
@@ -59,6 +62,9 @@ if __name__ == '__main__':
     global encrypt_key
     encrypt_key = rsa.PublicKey.load_pkcs1(i.read())
     i.close()
+    global proto
+    proto = int(input("Please select type of obfuscation protocol to use, " +
+                      "from 0 through "+str(obfuscate.get_proto_count())+": "))
     m = mqtt.Client()
     m.connect(addr)
     m.subscribe((topic, 2))
@@ -71,6 +77,7 @@ if __name__ == '__main__':
             print(" (Message being encrypted and sent...)",
                   end="\r", flush=True)
             message = encrypt(message)
+            message = obfuscate.obfs(message, proto)
             m.publish(topic, payload=message)
             print("\033[K", end="", flush=True)
     except KeyboardInterrupt:
