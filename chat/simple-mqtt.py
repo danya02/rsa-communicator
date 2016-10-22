@@ -64,7 +64,8 @@ if __name__ == '__main__':
     i.close()
     global proto
     proto = int(input("Please select type of obfuscation protocol to use, " +
-                      "from 0 through "+str(obfuscate.get_proto_count())+": "))
+                      "from 0 through "+str(
+                          obfuscate.get_proto_count()-1)+": "))
     m = mqtt.Client()
     m.connect(addr)
     m.subscribe((topic, 2))
