@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from sympy.ntheory import factorint
+import argparse
 factors = [
     {"num": 1522605027922533360535618378132637429718068114961380688657908494580122963258952897654000350692006139,
      "factor": {"37975227936943673922808872755445627854565536638199": 1,
@@ -95,6 +96,7 @@ factors = [
      "difficulty": 32}
 ]
 
+
 def factor(num):
     return factorint(int(num))
 
@@ -108,5 +110,22 @@ def smartfactor(num):
             return i["factor"]
     return factor(num)
 
+
+def parse():
+    parser = argparse.ArgumentParser(description="Factorize an integer.")
+    parser.add_argument('--simple', dest='process', action='store_const',
+                        const=factor, default=smartfactor,
+                        help='use simple factoring algorithm')
+    parser.add_argument('-q', action='store_true',
+                        help='do not output anything')
+    parser.add_argument('-v', '--version', action='version',
+                        version='1.0')
+    parser.add_argument('number', metavar='n', type=int,
+                        help='number to factorize')
+    return parser.parse_args()
+
 if __name__ == '__main__':
-    print("Answer:", smartfactor(input("number to factor:")))
+    args = parse()
+    answer = args.process(args.number)
+    if not args.q:
+        print(answer)
