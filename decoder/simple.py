@@ -18,12 +18,21 @@ def decrypt(msg, key):
 if __name__ == '__main__':
     print("--- RSA decoder ---")
     print("Loading keys...", end=" ")
-    pub, pri = load_keys()
+    try:
+        pub, pri = load_keys()
+    except:
+        print("FAILED.")
+        print("Keypair not found or corrupted. Generate your keypair.")
+        raise SystemExit(1)
     print("done.")
     print("Please enter the cyphertext of the message on a single line...")
     cyphertext = bytes(input(), "utf-8")
     print("Decrypting message...", end=" ")
-    decrypted_msg = decrypt(cyphertext, pri)
+    try:
+        decrypted_msg = decrypt(cyphertext, pri)
+    except:
+        print("FAILED.")
+        print("Unable to decrypt message, wrong keypair or message corrupted?")
     print("done.")
     print("Your decrypted message is:")
     print()

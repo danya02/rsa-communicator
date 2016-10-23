@@ -4,22 +4,28 @@ import json
 
 
 def load_keybook():
-    import os
-    i = open(os.path.expanduser("~/.rsa-communicator/keybook.json"))
-    obj = json.load(i)
-    i.close()
-    return obj
+    try:
+        import os
+        i = open(os.path.expanduser("~/.rsa-communicator/keybook.json"))
+        obj = json.load(i)
+        i.close()
+        return obj
+    except:
+        raise EnvironmentError
 
 
 def load_keys():
-    import os
-    i = open(os.path.expanduser("~/.rsa-communicator/pub.key"), "rb")
-    pub = rsa.PublicKey.load_pkcs1(i.read())
-    i.close()
-    i = open(os.path.expanduser("~/.rsa-communicator/priv.key"), "rb")
-    pri = rsa.PrivateKey.load_pkcs1(i.read())
-    i.close()
-    return (pub, pri)
+    try:
+        import os
+        i = open(os.path.expanduser("~/.rsa-communicator/pub.key"), "rb")
+        pub = rsa.PublicKey.load_pkcs1(i.read())
+        i.close()
+        i = open(os.path.expanduser("~/.rsa-communicator/priv.key"), "rb")
+        pri = rsa.PrivateKey.load_pkcs1(i.read())
+        i.close()
+        return (pub, pri)
+    except:
+        raise OSError
 
 
 def encrypt(plaintext, key):
@@ -27,8 +33,16 @@ def encrypt(plaintext, key):
 if __name__ == '__main__':
     print("--- RSA encoder ---")
     print("Loading keys...", end=" ")
-    keybook = load_keybook()
-    pub, pri = load_keys()
+    try:
+        keybook = load_keybook()
+        pub, pri = load_keys()
+    except EnvironmentError:
+        print("FAILED.")
+        print("Keybook not found or corrupted. Import some keys.")
+        raise SystemExit(1)
+    except OSError:
+        print("FAILED.")
+        print("Keypair not found or corrupted. Generate your keypair.")
     print("done.")
     print("Please select the index of the addressee...")
     for i in keybook:
